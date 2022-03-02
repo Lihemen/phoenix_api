@@ -14,6 +14,10 @@ defmodule PhoenixApiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :json_api do
+    plug :accepts, ["json-api"]
+    plug JaSerializer.Deserializer
+  end
   # scope "/", PhoenixApiWeb do
   #   pipe_through :browser
 
@@ -22,7 +26,7 @@ defmodule PhoenixApiWeb.Router do
 
   # Other scopes may use custom stacks.
   scope "/api", PhoenixApiWeb do
-    pipe_through :api
+    pipe_through :json_api
 
     resources "/projects", ProjectController, only: [:index, :show]
 
