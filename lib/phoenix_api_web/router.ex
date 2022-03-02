@@ -14,16 +14,20 @@ defmodule PhoenixApiWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", PhoenixApiWeb do
-    pipe_through :browser
+  # scope "/", PhoenixApiWeb do
+  #   pipe_through :browser
 
-    get "/", PageController, :index
-  end
+  #   get "/", PageController, :index
+  # end
 
   # Other scopes may use custom stacks.
-  # scope "/api", PhoenixApiWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", PhoenixApiWeb do
+    pipe_through :api
+
+    resources "/projects", ProjectController, only: [:index, :show]
+
+    resources "/documents", DocumentController, only: [:index, :show]
+  end
 
   # Enables LiveDashboard only for development
   #
